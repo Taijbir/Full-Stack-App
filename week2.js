@@ -21,10 +21,8 @@ app.get("/about", function(req,res){
   });
 
 app.get("/employees", function(req,res){
-  res.json({data});
+  res.sendFile(path.join(__dirname,"/data/employees.json"));
 });
-
-
 
 
 // setup http server to listen on HTTP_PORT
