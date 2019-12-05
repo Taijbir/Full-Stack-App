@@ -20,10 +20,13 @@ app.get("/about", function(req,res){
     res.sendFile(path.join(__dirname,"/views/about.html"));
   });
 
+  // setup another route to listen on /employees
 app.get("/employees", function(req,res){
   res.sendFile(path.join(__dirname,"/data/employees.json"));
 });
-
+app.get("/managers", function(req,res){
+  res.json({ isManager : true});
+});
 
 // setup http server to listen on HTTP_PORT
 app.listen(HTTP_PORT, onHttpStart);
