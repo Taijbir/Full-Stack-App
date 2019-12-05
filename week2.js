@@ -21,7 +21,7 @@ app.get("/about", function(req,res){
   });
 
 app.get("/employees", function(req,res){
-  res.json({body});
+  res.json({data});
 });
 
 
