@@ -1,4 +1,4 @@
-var dataService = require("/data-service.js");
+var dataService = require("./data-service.js");
 var path = require("path");
 var express = require("express");
 var app = express();
@@ -20,10 +20,10 @@ app.get("/about", function(req,res){
     res.sendFile(path.join(__dirname,"/views/about.html"));
   });
 
-
 app.get("/employees", function(req,res){
   res.json({body});
 });
+
 
 
 
