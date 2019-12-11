@@ -23,12 +23,12 @@ app.get("/about", function(req,res){
 // setup another route to listen on /employees
 app.get("/employees", function(req,res) {
   dataservice.getAllEmployees()
-.then(function (data) {
-res.json(data);
-})
-    .catch(function (rejectMsg) {
-console.log("Unable to display the employees list.");
-})
+    .then(function (data) {
+      res.json(data);
+  })
+  .catch(function (rejectMsg) {
+    console.log("Unable to display the employees list.");
+  })
 });
 /*
 // setup another route to listen on /managers 
@@ -52,4 +52,11 @@ app.use((req, res) => {
 });
 
 // setup http server to listen on HTTP_PORT
-app.listen(HTTP_PORT, onHttpStart);
+dataservice.initialize()
+.then(() => {
+  app.listen(HTTP_PORT, onHttpStart);
+})
+.catch(()=> {
+  console.log("Could not initialize the json array");
+})
+
