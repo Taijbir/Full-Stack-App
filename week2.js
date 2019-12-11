@@ -39,12 +39,12 @@ app.get("/managers", function(req,res){
 // setup another route to listen on /departments
 app.get("/departments", function(req,res) {
   dataservice.getdepartments()
-.then(function (data) {
-res.json(data);
-})
-    .catch(function (rejectMsg) {
-console.log("Unable to display the departments list.");
-})
+    .then(function (data) {
+      res.json(data);
+  })
+  .catch(function (rejectMsg) {
+    console.log("Unable to display the departments list.");
+  })
 });
 
 app.use((req, res) => {
