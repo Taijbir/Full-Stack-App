@@ -30,12 +30,17 @@ app.get("/employees", function(req,res) {
     console.log("Unable to display the employees list.");
   })
 });
-/*
+
 // setup another route to listen on /managers 
 app.get("/managers", function(req,res){
-  //res.sendFile(path.join(__dirname,"/data/employees.json"));
+  dataservice.getManagers()
+    .then(function (data) {
+      res.json(data);
+  })
+  .catch(function (rejectMsg) {
+    console.log("Unable to display the managers list.");
+  })
 });
-*/
 // setup another route to listen on /departments
 app.get("/departments", function(req,res) {
   dataservice.getDepartments()

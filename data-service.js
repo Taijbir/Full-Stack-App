@@ -41,9 +41,12 @@ module.exports.getDepartments = function() {
 
 module.exports.getManagers = function() {
     return new Promise (function(resolve, reject) {
-        resolve(Managers);
+        var managers = [];
+        resolve(managers);
         if (Managers.length == 0) 
             reject("error in get Managers"); 
+        else
+            JSON.stringify(isManagers);
 
 
     });
