@@ -38,7 +38,7 @@ app.get("/managers", function(req,res){
 */
 // setup another route to listen on /departments
 app.get("/departments", function(req,res) {
-  dataservice.getdepartments()
+  dataservice.getDepartments()
     .then(function (data) {
       res.json(data);
   })
