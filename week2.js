@@ -1,4 +1,4 @@
-var dataService = require("./data-service.js");
+var dataservice = require("./data-service.js");
 var path = require("path");
 var express = require("express");
 var app = express();
@@ -31,7 +31,7 @@ console.log("Unable to display the employees list.");
 })
 });
 /*
-// setup another route to listen on /managers (NOT DONE, GET HELP)
+// setup another route to listen on /managers 
 app.get("/managers", function(req,res){
   //res.sendFile(path.join(__dirname,"/data/employees.json"));
 });
