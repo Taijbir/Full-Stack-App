@@ -21,16 +21,34 @@ app.get("/about", function(req,res){
   });
 
 // setup another route to listen on /employees
-app.get("/employees", function(req,res){
-  res.sendFile(path.join(__dirname,"/data/employees.json"));
+app.get("/employees", function(req,res) {
+  dataservice.getAllEmployees()
+.then(function (data) {
+res.json(data);
+})
+    .catch(function (rejectMsg) {
+console.log("Unable to display the employees list.");
+})
 });
+/*
 // setup another route to listen on /managers (NOT DONE, GET HELP)
 app.get("/managers", function(req,res){
-  obj = JSON.parse("/data/employees.json");
+  //res.sendFile(path.join(__dirname,"/data/employees.json"));
 });
+*/
 // setup another route to listen on /departments
-app.get("/departments", function(req,res){
-  res.sendFile(path.join(__dirname,"/data/departments.json"));
+app.get("/departments", function(req,res) {
+  dataservice.getdepartments()
+.then(function (data) {
+res.json(data);
+})
+    .catch(function (rejectMsg) {
+console.log("Unable to display the departments list.");
+})
+});
+
+app.use((req, res) => {
+  res.status(404).send("Page Not Found");
 });
 
 // setup http server to listen on HTTP_PORT
