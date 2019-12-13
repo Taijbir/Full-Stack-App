@@ -52,8 +52,9 @@ app.get("/departments", function(req,res) {
   })
 });
 
+
 app.get("/employees/add", function(req,res){
-  res.sendFile(path.join(__dirname,"/views/addEmployee.html "));
+  res.sendFile(path.join(__dirname,"/views/addEmployee.html"));
 });
 
 app.get("/images/add", function(req,res){
