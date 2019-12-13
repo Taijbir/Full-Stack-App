@@ -45,7 +45,7 @@ module.exports.getManagers = function(){
         const managers = employees.filter(employees => employees.isManager == true);
         //var managers = [];
         resolve(managers);
-        if(employees.length == 0)
+        if(managers.length == 0)
             reject("error in get managers"); 
         
     });
