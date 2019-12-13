@@ -39,17 +39,15 @@ module.exports.getDepartments = function() {
     });
 };
 
-module.exports.getManagers = function() {
-    return new Promise (function(resolve, reject) {
+module.exports.getManagers = function(){
+    return new Promise((resolve, reject) => {
         let managers = employees.filter(employees => employees.isManager == true);
         resolve(managers);
-        if (Managers.length == 0) 
-            reject("error in get Managers"); 
-
-
-
+        if(employees.length == 0)
+            reject("error in get managers"); 
     });
 };
+
 
 
 
