@@ -58,7 +58,7 @@ app.get("/employees/add", function(req,res){
 });
 
 app.get("/images/add", function(req,res){
-  res.sendFile(path.join(__dirname,"/views/addImages.html "));
+  res.sendFile(path.join(__dirname,"/views/addImages.html"));
 });
 
 app.use((req, res) => {
