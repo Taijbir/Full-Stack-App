@@ -42,12 +42,11 @@ module.exports.getDepartments = function() {
 
 module.exports.getManagers = function(){
     return new Promise((resolve, reject) => {
+        const managers = employees.filter(employees => employees.isManager == true);
         //var managers = [];
         resolve(managers);
         if(employees.length == 0)
             reject("error in get managers"); 
-        else
-            const managers = employees.filter(employees => employees.isManager == true);
         
     });
 };
