@@ -2,6 +2,7 @@ var dataservice = require("./data-service.js");
 var path = require("path");
 var express = require("express");
 var app = express();
+const multer = require("multer");
 
 var HTTP_PORT = process.env.PORT || 8080;
 
@@ -60,6 +61,15 @@ app.get("/employees/add", function(req,res){
 app.get("/images/add", function(req,res){
   res.sendFile(path.join(__dirname,"/views/addImages.html"));
 });
+
+const storage = multer.diskStorage({
+  destination: "./public/photos/",
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: storage });
 
 app.use((req, res) => {
   res.status(404).send("Page Not Found");
