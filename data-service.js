@@ -17,11 +17,17 @@ module.exports.initialize = function() {
         employees = JSON.parse(data);
     });
 
+    fs.readFile('public/images.json', 'utf8', (err, data) => {
+        if (err) {
+            throw err;
+        }
+        images = JSON.parse(data);
+    });
+
         resolve('Data parsed successfully.');
         reject('Unable to read file.');
     });
 };
-
 
 module.exports.getAllEmployees = function() {
     return new Promise (function(resolve, reject) {
@@ -48,6 +54,15 @@ module.exports.getManagers = function(){
         if(managers.length == 0)
             reject("error in get managers"); 
         
+    });
+};
+
+
+module.exports.getImages = function() {
+    return new Promise (function(resolve, reject) {
+        resolve(images);
+        if (images.length == 0) 
+            reject("error in get images"); 
     });
 };
 
