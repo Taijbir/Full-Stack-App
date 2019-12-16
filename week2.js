@@ -61,7 +61,7 @@ app.get("/employees/add", function(req,res){
 app.get("/images/add", function(req,res){
   res.sendFile(path.join(__dirname,"/views/addImages.html"));
 });
-
+/*
 app.get("/images", function(req,res) {
   dataservice.getImages()
     .then(function (data) {
@@ -91,6 +91,7 @@ app.post("/images/add", upload.single("imageFile"), (req, res) => {
     "<br/><p>This is the image you sent:<br/><img src='/images/" + formFile.filename + "'/>";
   res.send(dataReceived);
 });
+*/
 app.use((req, res) => {
   res.status(404).send("Page Not Found");
 });
