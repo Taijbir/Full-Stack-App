@@ -17,7 +17,7 @@ module.exports.initialize = function() {
         employees = JSON.parse(data);
     });
 
-    fs.readFile('./public/images/uploaded', 'utf8', (err, data) => {
+    fs.readFile('./public/images/uploaded.json', 'utf8', (err, data) => {
         if (err) {
             throw err;
         }
