@@ -3,6 +3,7 @@ var path = require("path");
 var express = require("express");
 var app = express();
 const multer = require("multer");
+const fs = require('fs');
 
 var HTTP_PORT = process.env.PORT || 8080;
 
