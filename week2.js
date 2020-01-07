@@ -73,7 +73,7 @@ app.get("/employees/add", function(req,res){
   res.sendFile(path.join(__dirname,"/views/addEmployee.html"));
 });
 
-app.get("/images/add", ensureLogin, (req,res)=>{
+app.get("/images/add", (req,res)=>{
   res.render('addImage');
 });
 
