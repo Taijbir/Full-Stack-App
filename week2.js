@@ -72,16 +72,16 @@ app.get("/images/add", function(req,res){
   res.sendFile(path.join(__dirname,"/views/addImages.html"));
 });
 
-
-app.post("/images/add", upload.single("imageFile"), (req, res) => {
-  res.redirect("/images");
-});
-
 app.get("/images", (req,res) =>{
   fs.readdir("./public/images/uploaded", function(err, data) {
       res.render('images',{images:data}); 
   });
 });
+
+app.post("/images/add", upload.single("imageFile"), (req, res) => {
+  res.redirect("images");
+});
+
 
 
 app.use((req, res) => {
