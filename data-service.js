@@ -16,14 +16,7 @@ module.exports.initialize = function() {
         }
         employees = JSON.parse(data);
     });
-/*
-    fs.readFile('./public/images/uploaded.json', 'utf8', (err, data) => {
-        if (err) {
-            throw err;
-        }
-        images = JSON.parse(data);
-    });
-*/
+
         resolve('Data parsed successfully.');
         reject('Unable to read file.');
     });
@@ -56,16 +49,9 @@ module.exports.getManagers = function(){
         
     });
 };
-/*
 
-module.exports.getImages = function() {
-    return new Promise (function(resolve, reject) {
-        resolve(images);
-        if (images.length == 0) 
-            reject("error in get images"); 
-    });
-};
 
-*/
+
+
 
 
