@@ -4,6 +4,8 @@ var express = require("express");
 var app = express();
 const multer = require("multer");
 const fs = require('fs');
+var bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: true }));
 
 var HTTP_PORT = process.env.PORT || 8080;
 
@@ -69,6 +71,10 @@ app.get("/departments", function(req,res) {
 
 app.get("/employees/add", function(req,res){
   res.sendFile(path.join(__dirname,"/views/addEmployee.html"));
+});
+
+app.post("/employees/add", (req, res) => {
+  res.redirect("/employees");
 });
 
 app.get("/images/add", (req,res)=>{
