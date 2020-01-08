@@ -88,7 +88,7 @@ app.get("/images", (req,res) =>{
       //});
       
       res.status(200);
-      res.json("hello");
+      res.json(data);
   });
 });
 
