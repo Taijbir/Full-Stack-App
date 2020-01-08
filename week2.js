@@ -7,7 +7,7 @@ const fs = require('fs');
 
 var HTTP_PORT = process.env.PORT || 8080;
 
-app.set('view engine', 'html');
+//app.set('view engine', 'html');
 
 // call this function after the http server starts listening for requests
 function onHttpStart() {
