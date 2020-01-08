@@ -1,35 +1,11 @@
-var express = require("express");
-var path = require("path");
-var multer = require("multer");
-const fs = require('fs');
-var bodyParser = require("body-parser");
 var dataservice = require("./data-service.js");
-const exphbs = require('express-handlebars');
+var path = require("path");
+var express = require("express");
 var app = express();
-var HTTP_PORT = process.env.PORT || 8086;
-app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.engine('.hbs', exphbs({
-  defaultLayout: 'main',
-  extname: '.hbs',
-    helpers: {
-    navLink: function(url, options){    
-      return '<li' + ((url == app.locals.activeRoute) ? ' class="active" ' : '') +  
-    '><a href="' + url + '">' + options.fn(this) + '</a></li>';
-},
-equal: function (lvalue, rvalue, options) {
-if (arguments.length < 3)        
-throw new Error("Handlebars Helper equal needs 2 parameters");    
-if (lvalue != rvalue) {        
-return options.inverse(this);
-} else {        
-return options.fn(this);  
-}
-}
-}
-}));
-app.set('view engine', '.hbs');
+const multer = require("multer");
+const fs = require('fs');
 
+var HTTP_PORT = process.env.PORT || 8080;
 
 //app.set('view engine', 'html');
 
@@ -97,7 +73,7 @@ app.get("/employees/add", function(req,res){
 
 app.get("/images/add", (req,res)=>{
   res.sendFile(path.join(__dirname,"/views/addImages.html"));
-});     
+});
 
 
 app.post("/images/add", upload.single(("imageFile")), (req, res) => {
@@ -106,7 +82,7 @@ app.post("/images/add", upload.single(("imageFile")), (req, res) => {
 
 app.get("/images", (req,res) =>{
   fs.readdir("./public/images/uploaded", function(err, data) {
-      res.render('images', {
+      res.send('images', {
         images : data,
         title: "Images"
       }); 
