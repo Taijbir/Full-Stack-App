@@ -7,6 +7,8 @@ const fs = require('fs');
 
 var HTTP_PORT = process.env.PORT || 8080;
 
+app.set('view engine', '.hbs');
+
 // call this function after the http server starts listening for requests
 function onHttpStart() {
   console.log("Express http server listening on: " + HTTP_PORT);
