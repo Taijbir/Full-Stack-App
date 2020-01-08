@@ -82,7 +82,7 @@ app.post("/images/add", upload.single(("imageFile")), (req, res) => {
 
 app.get("/images", (req,res) =>{
   fs.readdir("./public/images/uploaded", function(err, data) {
-      res.json('images', {
+      res.render('images', {
         images : data,
         title: "Images"
       }); 
