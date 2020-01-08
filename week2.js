@@ -63,23 +63,25 @@ app.get("/departments", function(req,res) {
   })
 });
 
-app.get("/images", (req,res) =>{
-  fs.readdir("./public/images/uploaded", function(err, data) {
-      res.render('images',{images:data}); 
-  });
-});
+
 
 app.get("/employees/add", function(req,res){
   res.sendFile(path.join(__dirname,"/views/addEmployee.html"));
 });
 
 app.get("/images/add", (req,res)=>{
-  res.render('addImage');
+  res.sendFile(path.join(__dirname,"/views/addImages.html"));
 });
 
 
 app.post("/images/add", upload.single(("imageFile")), (req, res) => {
   res.redirect("/images");
+});
+
+app.get("/images", (req,res) =>{
+  fs.readdir("./public/images/uploaded", function(err, data) {
+      res.render('images',{images:data}); 
+  });
 });
 
 
