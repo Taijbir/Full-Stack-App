@@ -5,6 +5,7 @@ var app = express();
 const multer = require("multer");
 const fs = require('fs');
 var bodyParser = require('body-parser')
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var HTTP_PORT = process.env.PORT || 8080;
