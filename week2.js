@@ -78,7 +78,7 @@ app.post("/employees/add", (req, res) => {
   //res.redirect("/employees");
 
   //const formData = req.body;
-  res.json({requestBody: req.body});
+  res.json({"requestBody": req.body});
   console.log(req.body);
   
 });
