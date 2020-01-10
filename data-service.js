@@ -3,6 +3,7 @@ var employees = [];
 var departments = [];
 
 
+
 module.exports.initialize = function() {
     return new Promise (function(resolve, reject) {
     fs.readFile('data/departments.json', 'utf8', (err, data) => {
@@ -30,6 +31,14 @@ module.exports.getAllEmployees = function() {
     });
 };
 
+module.exports.employeeData = function() {
+    return new Promise (function(resolve, reject) {
+        // resolve(employees);
+        // if (employees.length == 0) 
+        //     reject("error in get employee data"); 
+    });
+};
+
 
 module.exports.getDepartments = function() {
     return new Promise (function(resolve, reject) {
@@ -49,6 +58,7 @@ module.exports.getManagers = function(){
         
     });
 };
+
 
 
 
