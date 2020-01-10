@@ -76,8 +76,8 @@ app.get("/employees/add", function(req,res){
 app.post("/employees/add", (req, res) => {
   //res.redirect("/employees");
 
-  const formData = req.body;
-  console.log(formData);
+  //const formData = req.body;
+  console.log(req.body);
   
 });
 
