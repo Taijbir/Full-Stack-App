@@ -75,13 +75,16 @@ app.get("/employees/add", function(req,res){
 });
 
 app.post("/employees/add", (req, res) => {
-  //res.redirect("/employees");
-
-  //const formData = req.body;
-  res.json({"requestBody": req.body});
-  console.log(req.body);
-  
+  //console.log(req.body);
+  dataservice.addEmployee(req.body)
+  .then(function (data) {
+    res.redirect("/employees");
+})
+.catch(function (rejectMsg) {
+  console.log("Unable to display the departments list.");
+})
 });
+
 
 app.get("/images/add", (req,res)=>{
   res.sendFile(path.join(__dirname,"/views/addImages.html"));
@@ -94,16 +97,52 @@ app.post("/images/add", upload.single(("imageFile")), (req, res) => {
 
 app.get("/images", (req,res) =>{
   fs.readdir("./public/images/uploaded", function(err, data) {
-      //res.status(200).send('images', {
-      //  images : data,
-      //  title: "Images"
-      //});
-      
       res.status(200);
       res.json(data);
   });
 });
 
+app.get("/employees", function(req,res){
+  dataservice.getEmployeesByStatus(req.query.status)
+    .then(function (data) {
+      console.log(data);
+      res.json(data);
+  })
+  .catch(function (rejectMsg) {
+    console.log("Unable to display the managers list.");
+  })
+});
+
+app.get("/employees?department=value", function(req,res){
+  dataservice.getEmployeesByDepartment(department)
+    .then(function (data) {
+      //res.json(data);
+  })
+  .catch(function (rejectMsg) {
+    console.log("Unable to display the managers list.");
+  })
+});
+
+
+app.get("/employees?manager=value", function(req,res){
+  dataservice.getEmployeesByManager(manager)
+    .then(function (data) {
+      //res.json(data);
+  })
+  .catch(function (rejectMsg) {
+    console.log("Unable to display the managers list.");
+  })
+});
+
+app.get("/employee/value", function(req,res){
+  dataservice.getEmployeeByNum(num)
+    .then(function (data) {
+      //res.json(data);
+  })
+  .catch(function (rejectMsg) {
+    console.log("Unable to display the managers list.");
+  })
+});
 
 app.use((req, res) => {
   res.status(404).send("Page Not Found");

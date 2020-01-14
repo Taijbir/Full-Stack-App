@@ -31,13 +31,24 @@ module.exports.getAllEmployees = function() {
     });
 };
 
-module.exports.employeeData = function() {
-    return new Promise (function(resolve, reject) {
-        // resolve(employees);
-        // if (employees.length == 0) 
-        //     reject("error in get employee data"); 
+module.exports.addEmployee = function (employeeData) {
+    return new Promise(function (resolve, reject) {
+        //employeeData.isManager = (employeeData.isManager  != null) ? true : false;
+        if (employeeData.isManager == null) {
+            employeeData.isManager == false;
+        } else {
+            employeeData.isManager == true;
+        }
+        for (var x in employeeData) {
+            if (employeeData[x] == "") {
+                employeeData[x] = null;
+            }
+        }
+                
+         resolve(employees.push(employeeData));
+            
     });
-};
+}
 
 
 module.exports.getDepartments = function() {
@@ -54,6 +65,17 @@ module.exports.getManagers = function(){
         //var managers = [];
         resolve(managers);
         if(managers.length == 0)
+            reject("error in get managers"); 
+        
+    });
+};
+
+module.exports.getEmployeesByStatus = function(status){
+    return new Promise((resolve, reject) => {
+        const EmployeesByStatus = employees.filter(employees => employees.status == "Full Time");
+        console.log(EmployeesByStatus);
+        resolve(EmployeesByStatus);
+        if(EmployeesByStatus.length == 0)
             reject("error in get managers"); 
         
     });
