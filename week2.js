@@ -11,21 +11,6 @@ const exphbs = require('express-handlebars');
 app.engine('.hbs', exphbs({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
 
-app.get("/viewData", function(req,res){
-
-    var someData = {
-        name: "John",
-        age: 23,
-        occupation: "developer",
-        company: "Scotiabank"
-    };
-
-    res.render('viewData', {
-        data: someData,
-        layout: false // do not use the default Layout (main.hbs)
-    });
-
-});
 
 var HTTP_PORT = process.env.PORT || 8080;
 
@@ -53,7 +38,8 @@ app.get("/", function(req,res){
 
 // setup another route to listen on /about
 app.get("/about", function(req,res){
-    res.sendFile(path.join(__dirname,"/views/about.html"));
+    //res.sendFile(path.join(__dirname,"/views/about.html"));
+    res.render("about");
   });
 
 
@@ -114,25 +100,22 @@ app.get("/departments", function(req,res) {
 });
 
 
-
-app.get("/employees/add", function(req,res){
-  res.sendFile(path.join(__dirname,"/views/addEmployee.html"));
+app.get("/employees/add", (req, res) => {
+  //res.sendFile(path.join(__dirname+"/views/addEmployee.html"));
+  res.render("addEmployee");
 });
 
 app.post("/employees/add", (req, res) => {
   //console.log(req.body);
   dataservice.addEmployee(req.body)
-  .then(function (data) {
-    res.redirect("/employees");
-})
-.catch(function (rejectMsg) {
-  console.log("Unable to display the departments list.");
-})
+  .then(res.redirect('/employees'))
+  .catch((err) => res.json({"message": err})) 
 });
 
 
 app.get("/images/add", (req,res)=>{
-  res.sendFile(path.join(__dirname,"/views/addImages.html"));
+  //res.sendFile(path.join(__dirname,"/views/addImages.html"));
+  res.render("addImages");
 });
 
 
@@ -146,40 +129,6 @@ app.get("/images", (req,res) =>{
       res.json(data);
   });
 });
-
-/*
-
-app.get("/employees?department=value", function(req,res){
-  dataservice.getEmployeesByDepartment(department)
-    .then(function (data) {
-      //res.json(data);
-  })
-  .catch(function (rejectMsg) {
-    console.log("Unable to display the managers list.");
-  })
-});
-
-
-app.get("/employees?manager=value", function(req,res){
-  dataservice.getEmployeesByManager(manager)
-    .then(function (data) {
-      //res.json(data);
-  })
-  .catch(function (rejectMsg) {
-    console.log("Unable to display the managers list.");
-  })
-});
-
-app.get("/employee/value", function(req,res){
-  dataservice.getEmployeeByNum(num)
-    .then(function (data) {
-      //res.json(data);
-  })
-  .catch(function (rejectMsg) {
-    console.log("Unable to display the managers list.");
-  })
-});
-*/
 
 app.use((req, res) => {
   res.status(404).send("Page Not Found");
