@@ -7,6 +7,25 @@ const fs = require('fs');
 var bodyParser = require('body-parser')
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+const exphbs = require('express-handlebars');
+app.engine('.hbs', exphbs({ extname: '.hbs' }));
+app.set('view engine', '.hbs');
+
+app.get("/viewData", function(req,res){
+
+    var someData = {
+        name: "John",
+        age: 23,
+        occupation: "developer",
+        company: "Scotiabank"
+    };
+
+    res.render('viewData', {
+        data: someData,
+        layout: false // do not use the default Layout (main.hbs)
+    });
+
+});
 
 var HTTP_PORT = process.env.PORT || 8080;
 
@@ -28,7 +47,8 @@ const upload = multer({ storage: storage });
 
 // setup a 'route' to listen on the default url path (http://localhost)
 app.get("/", function(req,res){
-  res.sendFile(path.join(__dirname,"/views/home.html"));
+  //res.sendFile(path.join(__dirname,"/views/home.html"));
+  res.render("home");
 });
 
 // setup another route to listen on /about
