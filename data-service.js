@@ -72,18 +72,40 @@ module.exports.getManagers = function(){
 
 module.exports.getEmployeesByStatus = function(status){
     return new Promise((resolve, reject) => {
-        const EmployeesByStatus = employees.filter(employees => employees.status == "Full Time");
-        console.log(EmployeesByStatus);
-        resolve(EmployeesByStatus);
-        if(EmployeesByStatus.length == 0)
-            reject("error in get managers"); 
-        
+        const answer = [];
+        answer.push(resolve(employees.filter(employees => employees.status == status)));
+       
+resolve(answer);
+    });
+};
+
+module.exports.getEmployeesByDepartment = function(department){
+    return new Promise((resolve, reject) => {
+        const answer = [];
+        answer.push(resolve(employees.filter(employees => employees.department == department)));
+ 
+resolve(answer);
+
+
+    });
+};
+
+module.exports.getEmployeesByManager = function(manager){
+    return new Promise((resolve, reject) => {
+        const answer = [];
+        answer.push(resolve(employees.filter(employees => employees.employeeManagerNum == manager)));
+ 
+resolve(answer);
     });
 };
 
 
 
-
-
-
-
+module.exports.getEmployeeByNum = function(num){
+    return new Promise((resolve, reject) => {
+        const answer = [];
+        answer.push(resolve(employees.filter(employees => employees.employeeNum == num)));
+ 
+resolve(answer);
+    });
+};

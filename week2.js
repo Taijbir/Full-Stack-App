@@ -36,15 +36,40 @@ app.get("/about", function(req,res){
     res.sendFile(path.join(__dirname,"/views/about.html"));
   });
 
+
+
+ app.get('/employees/:employeeNum', (req, res) => {
+  dataservice.getEmployeeByNum(req.params.employeeNum)
+  .then((data) =>  
+    res.json(data))
+ });
 // setup another route to listen on /employees
-app.get("/employees", function(req,res) {
-  dataservice.getAllEmployees()
-    .then(function (data) {
-      res.json(data);
-  })
-  .catch(function (rejectMsg) {
-    console.log("Unable to display the employees list.");
-  })
+app.get('/employees', (req, res) => {
+  if(req.query.status) {
+      dataservice.getEmployeesByStatus(req.query.status)
+          .then((data) => 
+            res.json(data))
+          .catch((err) => 
+            res.json({"message": err}))
+  } else if(req.query.department){
+      dataservice.getEmployeesByDepartment(req.query.department)
+          .then((data) =>  
+            res.json(data))
+          .catch((err) => 
+            res.json({"message": err}))
+   } else if(req.query.manager){
+      dataservice.getEmployeesByManager(req.query.manager)
+          .then((data) =>  
+            res.json(data))
+          .catch((err) => 
+            res.json({"message": err}))
+  }else{
+      dataservice.getAllEmployees()
+          .then((data) => 
+            res.json(data))
+          .catch((err) => 
+            res.json({"message": err}))
+  }
 });
 
 // setup another route to listen on /managers 
@@ -102,16 +127,7 @@ app.get("/images", (req,res) =>{
   });
 });
 
-app.get("/employees", function(req,res){
-  dataservice.getEmployeesByStatus(req.query.status)
-    .then(function (data) {
-      console.log(data);
-      res.json(data);
-  })
-  .catch(function (rejectMsg) {
-    console.log("Unable to display the managers list.");
-  })
-});
+/*
 
 app.get("/employees?department=value", function(req,res){
   dataservice.getEmployeesByDepartment(department)
@@ -143,6 +159,7 @@ app.get("/employee/value", function(req,res){
     console.log("Unable to display the managers list.");
   })
 });
+*/
 
 app.use((req, res) => {
   res.status(404).send("Page Not Found");
