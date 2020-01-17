@@ -109,3 +109,9 @@ module.exports.getEmployeeByNum = function(num){
 resolve(answer);
     });
 };
+
+module.exports.updateEmployee = function(num){
+    return new Promise((resolve, reject) => {
+       
+    });
+};

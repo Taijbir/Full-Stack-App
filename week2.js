@@ -29,6 +29,33 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.engine('.hbs',exphbs({
+    extname:'.hbs', 
+    defaultLayout:'main',
+    helpers:{
+        navLink:function(url, options){
+            return '<li' + ((url==app.locals.activeRoute)? ' class="active"':'')
+                +'><a href="'+url+'">'+options.fn(this)+'</a></li>'
+        },
+        equal:function(lvalue, rvalue, options){
+            if(arguments.length<3)
+                throw new Error("Handlerbars Helper equal needs 2 parameters");
+            if(lvalue != rvalue){
+                return options.inverse(this);
+            }else{
+                return options.fn(this);
+            }
+        }
+    }
+}));
+app.use(function(req,res,next){
+  let route = req.baseUrl + req.path;
+  app.locals.activeRoute = (route == "/") ? "/" : route.replace(/\/$/, "");
+  next();
+ });
+ 
 
 // setup a 'route' to listen on the default url path (http://localhost)
 app.get("/", function(req,res){
@@ -44,12 +71,7 @@ app.get("/about", function(req,res){
 
 
 
- app.get('/employees/:employeeNum', (req, res) => {
-  dataservice.getEmployeeByNum(req.params.employeeNum)
-  .then((data) =>  
-    res.json(data))
- });
-// setup another route to listen on /employees
+ // setup another route to listen on /employees
 app.get('/employees', (req, res) => {
   if(req.query.status) {
       dataservice.getEmployeesByStatus(req.query.status)
@@ -69,41 +91,43 @@ app.get('/employees', (req, res) => {
             res.json(data))
           .catch((err) => 
             res.json({"message": err}))
+   } else if(req.query.employeeNum){
+      dataservice.getEmployeeByNum(req.query.employeeNum)
+      .then((data) => res.render("employee",{employee:data}))
+      .catch(()=>{res.render("employee",{message:"no results"})
+    })
+      
   }else{
       dataservice.getAllEmployees()
-          .then((data) => 
-            res.json(data))
-          .catch((err) => 
-            res.json({"message": err}))
+      .then((data) => res.render("employees",{employees:data}))
+      .catch(() => res.render("employees",{message: "no results"}))
   }
 });
 
-// setup another route to listen on /managers 
-app.get("/managers", function(req,res){
-  dataservice.getManagers()
-    .then(function (data) {
-      res.json(data);
-  })
-  .catch(function (rejectMsg) {
-    console.log("Unable to display the managers list.");
-  })
-});
+// // setup another route to listen on /managers 
+// app.get("/managers", function(req,res){
+//   dataservice.getManagers()
+//     .then(function (data) {
+//       res.json(data);
+//   })
+//   .catch(function (rejectMsg) {
+//     console.log("Unable to display the managers list.");
+//   })
+// });
 // setup another route to listen on /departments
 app.get("/departments", function(req,res) {
   dataservice.getDepartments()
-    .then(function (data) {
-      res.json(data);
-  })
-  .catch(function (rejectMsg) {
-    console.log("Unable to display the departments list.");
-  })
+  .then((data) => res.render("departments",{departments:data}))
+  .catch(() => res.render("departments",{"message": "no results"}))
 });
 
 
-app.get("/employees/add", (req, res) => {
+
+app.get("/employees/add", (req,res)=>{
   //res.sendFile(path.join(__dirname+"/views/addEmployee.html"));
   res.render("addEmployee");
 });
+
 
 app.post("/employees/add", (req, res) => {
   //console.log(req.body);
@@ -111,6 +135,14 @@ app.post("/employees/add", (req, res) => {
   .then(res.redirect('/employees'))
   .catch((err) => res.json({"message": err})) 
 });
+
+app.get("/images", (req, res) => {
+  fs.readdir("./public/images/uploaded", function(err, imageFile){
+      //res.json(imageFile);
+      res.render("images",  { data: imageFile, title: "Images" });
+  })
+
+})
 
 
 app.get("/images/add", (req,res)=>{
@@ -121,6 +153,11 @@ app.get("/images/add", (req,res)=>{
 
 app.post("/images/add", upload.single(("imageFile")), (req, res) => {
   res.redirect("/images");
+});
+
+app.post("/employee/update", function(req, res){
+  dataservice.updateEmployee(req.body)
+  .then(res.redirect('/employees'))
 });
 
 app.get("/images", (req,res) =>{
