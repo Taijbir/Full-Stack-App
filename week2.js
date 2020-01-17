@@ -155,10 +155,10 @@ app.post("/images/add", upload.single(("imageFile")), (req, res) => {
   res.redirect("/images");
 });
 
-app.post("/employee/update", function(req, res){
-  dataservice.updateEmployee(req.body)
-  .then(res.redirect('/employees'))
-});
+// app.post("/employee/update", function(req, res){
+//   dataservice.updateEmployee(req.body)
+//   .then(res.redirect('/employees'))
+// });
 
 app.get("/images", (req,res) =>{
   fs.readdir("./public/images/uploaded", function(err, data) {
