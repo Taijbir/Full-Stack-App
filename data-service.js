@@ -59,21 +59,21 @@ module.exports.getDepartments = function() {
     });
 };
 
-module.exports.getManagers = function(){
-    return new Promise((resolve, reject) => {
-        const managers = employees.filter(employees => employees.isManager == true);
-        //var managers = [];
-        resolve(managers);
-        if(managers.length == 0)
-            reject("error in get managers"); 
+// module.exports.getManagers = function(){
+//     return new Promise((resolve, reject) => {
+//         const managers = employees.filter(employees => employees.isManager == true);
+//         //var managers = [];
+//         resolve(managers);
+//         if(managers.length == 0)
+//             reject("error in get managers"); 
         
-    });
-};
+//     });
+// };
 
 module.exports.getEmployeesByStatus = function(status){
     return new Promise((resolve, reject) => {
         const answer = [];
-        answer.push(resolve(employees.filter(employees => employees.status == status)));
+        answer.push(employees.filter(employees => employees.status == status));
        
 resolve(answer);
     });
@@ -82,7 +82,7 @@ resolve(answer);
 module.exports.getEmployeesByDepartment = function(department){
     return new Promise((resolve, reject) => {
         const answer = [];
-        answer.push(resolve(employees.filter(employees => employees.department == department)));
+        answer.push(employees.filter(employees => employees.department == department));
  
 resolve(answer);
 
@@ -93,7 +93,7 @@ resolve(answer);
 module.exports.getEmployeesByManager = function(manager){
     return new Promise((resolve, reject) => {
         const answer = [];
-        answer.push(resolve(employees.filter(employees => employees.employeeManagerNum == manager)));
+        answer.push(employees.filter(employees => employees.employeeManagerNum == manager));
  
 resolve(answer);
     });
@@ -104,7 +104,7 @@ resolve(answer);
 module.exports.getEmployeeByNum = function(num){
     return new Promise((resolve, reject) => {
         const answer = [];
-        answer.push(resolve(employees.filter(employees => employees.employeeNum == num)));
+        answer.push(employees.filter(employees => employees.employeeNum == num));
  
 resolve(answer);
     });

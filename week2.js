@@ -57,22 +57,37 @@ app.use(function(req,res,next){
  });
  
 
-// setup a 'route' to listen on the default url path (http://localhost)
+
 app.get("/", function(req,res){
   //res.sendFile(path.join(__dirname,"/views/home.html"));
   res.render("home");
 });
 
-// setup another route to listen on /about
+
 app.get("/about", function(req,res){
     //res.sendFile(path.join(__dirname,"/views/about.html"));
     res.render("about");
 });
 
 
+// app.get('/employee/:employeeNum', (req, res) => {
+//   dataservice.getEmployeeByNum(req.params.employeeNum)
+//   .then((data) => 
+//     res.render("employee",{employee:data}))
+//   .catch(()=>
+//     {res.render("employee",{message:"no results"})
+// })
+// });
 
 
- // setup another route to listen on /employees
+app.get('/employee/:employeeNum',(req,res) => {
+  dataservice.getEmployeeByNum(req.query.employeeNum)
+  .then((data) =>
+    res.render("employee", {employee:data}))
+  .catch(() => 
+    res.render("employee", {message:"no results"}))
+})
+
 app.get('/employees', (req, res) => {
   if(req.query.status) {
       dataservice.getEmployeesByStatus(req.query.status)
@@ -101,14 +116,6 @@ app.get('/employees', (req, res) => {
 });
 
 
-app.get('/employee/:employeeNum', (req, res) => {
-  dataservice.getEmployeesByNum(req.params.employeeNum)
-  .then((data) => 
-    res.render("employee",{employee:data}))
-  .catch(()=>
-    {res.render("employee",{message:"no results"})
-})
-});
 // // setup another route to listen on /managers 
 // app.get("/managers", function(req,res){
 //   dataservice.getManagers()
@@ -119,7 +126,8 @@ app.get('/employee/:employeeNum', (req, res) => {
 //     console.log("Unable to display the managers list.");
 //   })
 // });
-// setup another route to listen on /departments
+
+
 app.get("/departments", function(req,res) {
   dataservice.getDepartments()
   .then((data) => res.render("departments",{departments:data}))
