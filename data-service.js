@@ -110,8 +110,20 @@ resolve(answer);
     });
 };
 
-module.exports.updateEmployee = function(num){
-    return new Promise((resolve, reject) => {
-       
-    });
-};
+// module.exports.updateEmployee = function(employeeData){
+//     return new Promise((resolve, reject) => {
+//         if (employeeData.isManager == null) {
+//             employeeData.isManager == false;
+//         } else {
+//             employeeData.isManager == true;
+//         }
+//         for (var x in employeeData) {
+//             if (employeeData[x] == "") {
+//                 employeeData[x] = null;
+//             }
+//         }
+                
+//          resolve(employees.push(employeeData));
+            
+//     });
+// };

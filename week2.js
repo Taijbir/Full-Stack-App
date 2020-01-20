@@ -67,7 +67,8 @@ app.get("/", function(req,res){
 app.get("/about", function(req,res){
     //res.sendFile(path.join(__dirname,"/views/about.html"));
     res.render("about");
-  });
+});
+
 
 
 
@@ -91,12 +92,7 @@ app.get('/employees', (req, res) => {
             res.json(data))
           .catch((err) => 
             res.json({"message": err}))
-   } else if(req.query.employeeNum){
-      dataservice.getEmployeeByNum(req.query.employeeNum)
-      .then((data) => res.render("employee",{employee:data}))
-      .catch(()=>{res.render("employee",{message:"no results"})
-    })
-      
+
   }else{
       dataservice.getAllEmployees()
       .then((data) => res.render("employees",{employees:data}))
@@ -104,6 +100,15 @@ app.get('/employees', (req, res) => {
   }
 });
 
+
+app.get('/employee/:employeeNum', (req, res) => {
+  dataservice.getEmployeesByNum(req.params.employeeNum)
+  .then((data) => 
+    res.render("employee",{employee:data}))
+  .catch(()=>
+    {res.render("employee",{message:"no results"})
+})
+});
 // // setup another route to listen on /managers 
 // app.get("/managers", function(req,res){
 //   dataservice.getManagers()
@@ -156,9 +161,9 @@ app.post("/images/add", upload.single(("imageFile")), (req, res) => {
 });
 
 // app.post("/employee/update", function(req, res){
-//   dataservice.updateEmployee(req.body)
-//   .then(res.redirect('/employees'))
-// });
+//    dataservice.updateEmployee(req.body)
+//    .then(res.redirect('/employees'))
+//  });
 
 app.get("/images", (req,res) =>{
   fs.readdir("./public/images/uploaded", function(err, data) {
@@ -179,4 +184,3 @@ dataservice.initialize()
 .catch(()=> {
   console.log("Could not initialize the json array");
 })
-
