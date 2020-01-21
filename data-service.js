@@ -94,6 +94,7 @@ module.exports.getEmployeesByManager = function(manager){
     return new Promise((resolve, reject) => {
         const answer = [];
         answer.push(employees.filter(employees => employees.employeeManagerNum == manager));
+        
  
 resolve(answer);
     });
@@ -101,12 +102,12 @@ resolve(answer);
 
 
 
+
 module.exports.getEmployeeByNum = function(num){
     return new Promise((resolve, reject) => {
         const answer = [];
         answer.push(employees.filter(employees => employees.employeeNum == num));
-        //console.log(answer);
- 
+        console.log(answer);
 resolve(answer);
     });
 };

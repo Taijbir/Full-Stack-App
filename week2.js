@@ -71,12 +71,10 @@ app.get("/about", function(req,res){
 
 
 
-app.get('/employee/:empNum', (req, res) => {
+app.get('/employee/:employeeNum', (req, res) => {
   dataservice.getEmployeeByNum(req.query.employeeNum)
-  .then((data) => 
-    res.render("employee", { employee: data }))
-  .catch(() => 
-    res.render("employee",{message:"no results"}))
+  .then((data) => res.render("employee",{employee:data}))
+  .catch(() => res.render("employee",{message: "no results"}))
 });
 
 app.get('/employees', (req, res) => {
