@@ -70,23 +70,14 @@ app.get("/about", function(req,res){
 });
 
 
-// app.get('/employee/:employeeNum', (req, res) => {
-//   dataservice.getEmployeeByNum(req.params.employeeNum)
-//   .then((data) => 
-//     res.render("employee",{employee:data}))
-//   .catch(()=>
-//     {res.render("employee",{message:"no results"})
-// })
-// });
 
-
-app.get('/employee/:employeeNum',(req,res) => {
+app.get('/employee/:empNum', (req, res) => {
   dataservice.getEmployeeByNum(req.query.employeeNum)
-  .then((data) =>
-    res.render("employee", {employee:data}))
+  .then((data) => 
+    res.render("employee", { employee: data }))
   .catch(() => 
-    res.render("employee", {message:"no results"}))
-})
+    res.render("employee",{message:"no results"}))
+});
 
 app.get('/employees', (req, res) => {
   if(req.query.status) {

@@ -105,6 +105,7 @@ module.exports.getEmployeeByNum = function(num){
     return new Promise((resolve, reject) => {
         const answer = [];
         answer.push(employees.filter(employees => employees.employeeNum == num));
+        //console.log(answer);
  
 resolve(answer);
     });
