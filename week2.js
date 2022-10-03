@@ -71,11 +71,44 @@ app.get("/about", function(req,res){
 
 
 
-app.get('/employee/:employeeNum', (req, res) => {
-  dataservice.getEmployeeByNum(req.query.employeeNum)
-  .then((data) => res.render("employee",{employee:data}))
-  .catch(() => res.render("employee",{message: "no results"}))
-});
+// app.get('/employee/:employeeNum', (req, res) => {
+// 	console.log(req.params.employeeNum);
+//   dataservice.getEmployeeByNum(req.params.employeeNum)
+//   .then((data) =>  res.render("employee",{employee:data}))
+//   .catch(() => res.render("employee",{message: "no results"})) 
+// });
+
+app.get("/employee/:employeeNum", (req, res) => {
+    let viewData = {};
+    dataservice.getEmployeeByNum(req.params.employeeNum).then((data) => {     
+      console.log(data);
+      if (data) {
+        viewData.employee = data[0]; 
+        //console.log(viewData.employee);
+        //console.log(viewData.employee.firstName)
+      } else {
+        viewData.employee = null; 
+      }
+    }).catch(() => {
+      viewData.employee = null; 
+    }).then(dataservice.getDepartments)
+      .then((data) => {
+        viewData.departments = data; 
+        for (let i = 0; i < viewData.departments.length; i++) {
+          if (viewData.departments[i].departmentId == viewData.employee.department) {
+            viewData.departments[i].selected = true;
+          }
+        }
+    }).catch(() => {
+      viewData.departments = []; 
+    }).then(() => {
+      if (viewData.employee == null) { 
+        res.status(404).send("Employee Not Found");
+      } else {
+        res.render("employee", { viewData: viewData }); 
+      }
+    });
+ });
 
 app.get('/employees', (req, res) => {
   if(req.query.status) {

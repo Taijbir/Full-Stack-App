@@ -75,7 +75,7 @@ module.exports.getEmployeesByStatus = function(status){
         const answer = [];
         answer.push(employees.filter(employees => employees.status == status));
        
-resolve(answer);
+		resolve(answer);
     });
 };
 
@@ -102,15 +102,23 @@ resolve(answer);
 
 
 
-
 module.exports.getEmployeeByNum = function(num){
-    return new Promise((resolve, reject) => {
+    //console.log(num);
+	
+	return new Promise((resolve, reject) => {
         const answer = [];
         answer.push(employees.filter(employees => employees.employeeNum == num));
-        console.log(answer);
-resolve(answer);
+        //console.log(answer);
+        //resolve(answer);
+        resolve(employees.filter(employees => employees.employeeNum == num));
     });
 };
+
+
+
+
+
+
 
 // module.exports.updateEmployee = function(employeeData){
 //     return new Promise((resolve, reject) => {
